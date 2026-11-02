@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mevoriq
 
-## Getting Started
+Digital business cards and professional profiles. **Your identity. Every connection.**
 
-First, run the development server:
+Source of truth: [`docs/product-plan.md`](docs/product-plan.md) (features, routes, data, API) and [`docs/brand-guidelines.md`](docs/brand-guidelines.md) (colors, type, logo, voice). Resolved conflicts: [`docs/decisions.md`](docs/decisions.md).
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # set NEXT_PUBLIC_APP_URL to the dev URL
+npm run dev                  # http://localhost:3001 if port 3000 is busy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Script | Does |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run build` | Production build |
+| `npm test` | Unit tests (vCard, validation, template contrast) |
+| `npm run typecheck` / `npm run lint` | Static checks |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Status
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Everything below works end to end on a **local development store** (`.data/`, git-ignored) with **demo sign-in** (name + email, no password):
 
-## Learn More
+- **Marketing site**: home (card fan, pinned scroll story, FAQ), features, templates playground, pricing, teams, about, contact, privacy, terms, cookies, 404, sitemap and robots — with scroll-reveal motion
+- Demo login with live card preview, 4-step onboarding
+- **Cards**: dashboard, card library, editor with live phone preview, photo upload, slug history, five accessible templates, share page (QR SVG/PNG, vCard, Meeting Mode)
+- **Public card** `/u/[slug]`: Save contact, contact rows, links, share-your-details form, report link; Meeting Mode `/u/[slug]/meeting`
+- **Contacts** inbox with status, tags, notes, follow-up dates, CSV export
+- **Insights**: privacy-friendly daily counts, 7/30/90 days, per card
+- **Settings**: profile and photo, download my data (JSON), delete account
+- **Teams**: create a team, invite by link, roles, brand presets with locked fields, company cards, offboarding
+- **Admin** (`/admin`, emails in `MEVORIQ_ADMIN_EMAILS`): reports and suspensions, feature flags, audit log
 
-To learn more about Next.js, take a look at the following resources:
+Runs on Supabase (Postgres, Auth with email link + Google, Storage) when its environment variables are set, and on a local development store otherwise. Database: `docs/database.md`. Publishing: `docs/deploy.md`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Not yet: email delivery for invitations and new-contact alerts, wallet passes, real 404/308 status codes for streamed pages.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Changing the logo
 
-## Deploy on Vercel
+The logo is expected to change. Logo and icon files live only in `public/brand/` and are referenced only through `components/brand/logo.tsx` and `lib/brand/config.ts`. Export new files with the same names (masters are in `brand/`), replace them in `public/brand/`, and the whole app updates.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Layout
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+app/              routes (marketing, auth, onboarding, app dashboard, public cards, API)
+components/       brand/, cards/, card-editor/, site/, ui/ (shadcn)
+lib/              brand/, cards/, data/ (repository + local store), auth/, validation/, vcard/, qr/
+supabase/         migrations (schema + RLS)
+brand/            master brand kit (logos, icons, tokens, sources)
+docs/             product plan, brand + sub-brand guidelines, decisions
+tests/unit/       vitest
+```

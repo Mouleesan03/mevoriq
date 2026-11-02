@@ -1,26 +1,242 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* Mevoriq "bright" design tokens — docs/brand-guidelines.md §3 (v2.0).
+   Token names are stable; values define the brand. Change colors here only.
+   navy = ink (dark UI), indigo = brand blue, mint = connection green. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --mevoriq-navy: #12131a;
+  --mevoriq-indigo: #2448e8;
+  --mevoriq-indigo-deep: #16289a;
+  --mevoriq-mint: #2fd08a;
+  --mevoriq-mint-ink: #0b5c3b;
+  --mevoriq-yellow: #ffd54a;
+  --mevoriq-coral: #ff6b57;
+  --mevoriq-pink: #ffe3ea;
+  --mevoriq-sky: #e3e9ff;
+  --mevoriq-cream: #fff4cc;
+  --mevoriq-leaf: #ddf6ea;
+  --mevoriq-bg: #ffffff;
+  --mevoriq-surface: #ffffff;
+  --mevoriq-fill: #f2f3f7;
+  --mevoriq-text: #12131a;
+  --mevoriq-body: #3d3f4c;
+  --mevoriq-muted: #5a5c6a;
+  --mevoriq-border: #ececf1;
+  --mevoriq-success: #0b5c3b;
+  --mevoriq-warning: #8a5a00;
+  --mevoriq-danger: #c0262d;
+  --mevoriq-radius-sm: 6px;
+  --mevoriq-radius-md: 10px;
+  --mevoriq-radius-lg: 16px;
+  --mevoriq-radius-xl: 24px;
+  --mevoriq-shadow-card: 0 30px 50px -28px rgb(18 19 26 / 35%);
+  --mevoriq-shadow-cta: 0 10px 24px -10px rgb(36 72 232 / 70%);
+
+  --background: var(--mevoriq-bg);
+  --foreground: var(--mevoriq-text);
+  --card: var(--mevoriq-surface);
+  --card-foreground: var(--mevoriq-text);
+  --popover: var(--mevoriq-surface);
+  --popover-foreground: var(--mevoriq-text);
+  --primary: var(--mevoriq-indigo);
+  --primary-foreground: #ffffff;
+  --secondary: var(--mevoriq-fill);
+  --secondary-foreground: var(--mevoriq-text);
+  --muted: var(--mevoriq-fill);
+  --muted-foreground: var(--mevoriq-muted);
+  --accent: var(--mevoriq-sky);
+  --accent-foreground: var(--mevoriq-indigo-deep);
+  --destructive: var(--mevoriq-danger);
+  --border: var(--mevoriq-border);
+  --input: var(--mevoriq-fill);
+  --ring: var(--mevoriq-indigo);
+  --radius: var(--mevoriq-radius-md);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-navy: var(--mevoriq-navy);
+  --color-ink: var(--mevoriq-navy);
+  --color-mint: var(--mevoriq-mint);
+  --color-mint-ink: var(--mevoriq-mint-ink);
+  --color-indigo: var(--mevoriq-indigo);
+  --color-blue: var(--mevoriq-indigo);
+  --color-blue-deep: var(--mevoriq-indigo-deep);
+  --color-yellow: var(--mevoriq-yellow);
+  --color-coral: var(--mevoriq-coral);
+  --color-pink: var(--mevoriq-pink);
+  --color-sky: var(--mevoriq-sky);
+  --color-cream: var(--mevoriq-cream);
+  --color-leaf: var(--mevoriq-leaf);
+  --color-fill: var(--mevoriq-fill);
+  --color-body: var(--mevoriq-body);
+  --color-canvas: var(--mevoriq-bg);
+  --color-surface: var(--mevoriq-surface);
+  --color-success: var(--mevoriq-success);
+  --color-warning: var(--mevoriq-warning);
+  --color-danger: var(--mevoriq-danger);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-brand-sm: var(--mevoriq-radius-sm);
+  --radius-brand-md: var(--mevoriq-radius-md);
+  --radius-brand-lg: var(--mevoriq-radius-lg);
+  --radius-brand-xl: var(--mevoriq-radius-xl);
+  --shadow-card: var(--mevoriq-shadow-card);
+  --shadow-cta: var(--mevoriq-shadow-cta);
+
+  --font-display: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --breakpoint-3xl: 1440px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: clip;
+  }
+  h1, h2, h3 {
+    @apply font-display font-bold tracking-[-0.03em] text-balance;
+  }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 3px solid var(--mevoriq-indigo);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--mevoriq-mint) 35%, transparent);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Responsive layout + type scale (mobile first). Use these instead of ad-hoc sizes. */
+@utility container-page {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) { padding-inline: 1.5rem; }
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+@utility section-y {
+  padding-block: 4rem;
+  @media (width >= 48rem) { padding-block: 5.5rem; }
+  @media (width >= 64rem) { padding-block: 7rem; }
+}
+@utility text-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  font-size: 2.25rem;
+  @media (width >= 40rem) { font-size: 3rem; }
+  @media (width >= 64rem) { font-size: 3.75rem; }
+}
+@utility text-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-size: 1.875rem;
+  @media (width >= 40rem) { font-size: 2.25rem; }
+  @media (width >= 64rem) { font-size: 2.75rem; }
+}
+@utility text-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  font-size: 1.375rem;
+  @media (width >= 64rem) { font-size: 1.625rem; }
+}
+@utility text-lead {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--mevoriq-body);
+  @media (width >= 40rem) { font-size: 1.1875rem; }
+}
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+@keyframes deal {
+  from { opacity: 0; transform: translateY(14px) rotate(-3deg) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Signature: the flipping business card (marketing hero + public card) */
+@utility perspective-card {
+  perspective: 1400px;
+}
+@utility backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+@keyframes card-intro-flip {
+  0%, 30% { transform: rotateY(0deg); }
+  45%, 75% { transform: rotateY(180deg); }
+  90%, 100% { transform: rotateY(360deg); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Scroll reveal: elements with data-reveal animate in when they enter the viewport.
+   Hidden only once JS has marked the page as motion-ready, so content never disappears without JS. */
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+}
+.motion-ready [data-reveal="left"] { transform: translateX(-20px); }
+.motion-ready [data-reveal="right"] { transform: translateX(20px); }
+.motion-ready [data-reveal="scale"] { transform: scale(0.97); }
+.motion-ready [data-reveal="tilt"] { transform: translateY(28px) scale(0.98); }
+.motion-ready [data-reveal].is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

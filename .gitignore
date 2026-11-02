@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local development data store (mock mode)
+/.data
+!.env.example
+
+# local editor / agent config
+/.claude
